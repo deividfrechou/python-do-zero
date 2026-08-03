@@ -1,0 +1,1408 @@
+/* ============================================================================
+   ESTILOS - LANDING PAGE "PYTHON NA PRÁTICA"
+   ============================================================================
+   Este arquivo controla TODA a aparência visual da página.
+   Ele está organizado em blocos, na seguinte ordem:
+
+   1. Variáveis de design (tokens de cor, fonte e espaçamento)
+   2. Reset básico e estilos globais
+   3. Componentes reutilizáveis (botões, cartões, etiquetas...)
+   4. Estilos específicos de cada seção da página
+   5. Animações
+   6. Responsividade (ajustes para telas menores)
+   ============================================================================ */
+
+
+/* ============================================================================
+   1. VARIÁVEIS DE DESIGN (DESIGN TOKENS)
+   ----------------------------------------------------------------------------
+   Definir cores e medidas como variáveis evita repetir valores "mágicos"
+   espalhados pelo código. Se precisar trocar uma cor no futuro, basta
+   alterar em um único lugar.
+   ============================================================================ */
+:root {
+
+    /* --- Paleta de cores ---
+       Inspirada no universo de programação: um fundo azul-índigo profundo
+       (como uma IDE em modo escuro), com o dourado e o azul característicos
+       do logo do Python usados como cores de destaque. */
+    --cor-fundo-principal: #141B2D;   /* fundo geral da página */
+    --cor-fundo-secundario: #1A2239;  /* fundo de seções alternadas */
+    --cor-superficie: #212B47;        /* fundo de cartões e caixas */
+    --cor-borda: #2E3A5C;             /* bordas sutis sobre o fundo escuro */
+
+    --cor-destaque-ouro: #FFD43D;     /* amarelo do logo do Python */
+    --cor-destaque-azul: #4B8BBE;     /* azul do logo do Python */
+    --cor-cta: #FF6B4A;               /* coral quente, usado nos botões de ação */
+    --cor-cta-hover: #FF8467;         /* tom do coral ao passar o mouse */
+
+    --cor-texto-principal: #EDEFF7;   /* texto principal sobre fundo escuro */
+    --cor-texto-secundario: #9AA5C2;  /* texto de apoio, menos importante */
+    --cor-texto-sobre-claro: #141B2D; /* texto usado sobre fundos claros/coloridos */
+
+    --cor-sucesso: #4ADE80;           /* verde usado nos ícones de "check" */
+
+    /* --- Tipografia ---
+       Três famílias de fonte, cada uma com um papel específico:
+       - Fonte de destaque: usada em títulos, transmite personalidade
+       - Fonte de leitura: usada em parágrafos, prioriza legibilidade
+       - Fonte monoespaçada: usada em rótulos e trechos de código,
+         reforçando a identidade "programação" da página */
+    --fonte-destaque: 'Space Grotesk', sans-serif;
+    --fonte-leitura: 'Inter', sans-serif;
+    --fonte-codigo: 'JetBrains Mono', monospace;
+
+    /* --- Espaçamentos (escala consistente, evita valores aleatórios) --- */
+    --espaco-xs: 0.5rem;
+    --espaco-sm: 1rem;
+    --espaco-md: 1.5rem;
+    --espaco-lg: 2.5rem;
+    --espaco-xl: 4rem;
+    --espaco-xxl: 6rem;
+
+    /* --- Outras medidas reutilizáveis --- */
+    --largura-maxima-conteudo: 1160px;
+    --largura-maxima-conteudo-estreita: 760px;
+    --raio-borda-padrao: 16px;
+    --raio-borda-pequeno: 10px;
+    --sombra-padrao: 0 20px 60px -20px rgba(0, 0, 0, 0.6);
+    --transicao-padrao: 0.25s ease;
+}
+
+
+/* ============================================================================
+   2. RESET BÁSICO E ESTILOS GLOBAIS
+   ----------------------------------------------------------------------------
+   Remove inconsistências padrão dos navegadores e define comportamentos
+   globais aplicados à página inteira.
+   ============================================================================ */
+
+/* box-sizing: border-box faz com que padding e borda sejam contados
+   DENTRO da largura/altura do elemento, evitando cálculos confusos */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Rolagem suave ao clicar em links internos (ex: menu -> seção da página) */
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: var(--cor-fundo-principal);
+    color: var(--cor-texto-principal);
+    font-family: var(--fonte-leitura);
+    line-height: 1.6;
+    /* overflow-x escondido evita barra de rolagem horizontal
+       causada por elementos decorativos posicionados fora da tela */
+    overflow-x: hidden;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+ul,
+ol {
+    list-style: none;
+}
+
+button {
+    font-family: inherit;
+    cursor: pointer;
+    border: none;
+    background: none;
+}
+
+/* Container central: limita a largura do conteúdo e centraliza na tela,
+   com respiro lateral (padding) para não colar nas bordas em telas médias */
+.container {
+    width: 100%;
+    max-width: var(--largura-maxima-conteudo);
+    margin-inline: auto;
+    padding-inline: var(--espaco-md);
+}
+
+.container--estreito {
+    max-width: var(--largura-maxima-conteudo-estreita);
+}
+
+/* Espaçamento vertical padrão de cada seção da página */
+.secao {
+    padding-block: var(--espaco-xxl);
+}
+
+/* Respeita usuários que configuraram o sistema para reduzir animações
+   (acessibilidade: evita desconforto em pessoas sensíveis a movimento) */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* Contorno de foco visível para navegação via teclado (acessibilidade) */
+a:focus-visible,
+button:focus-visible {
+    outline: 2px solid var(--cor-destaque-ouro);
+    outline-offset: 3px;
+    border-radius: 4px;
+}
+
+
+/* ============================================================================
+   3. COMPONENTES REUTILIZÁVEIS
+   ============================================================================ */
+
+/* --- Texto de destaque em dourado, usado dentro de títulos --- */
+.destaque-texto {
+    color: var(--cor-destaque-ouro);
+}
+
+/* --- Etiqueta pequena (eyebrow), usada acima dos títulos de seção --- */
+.etiqueta {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--espaco-xs);
+    font-family: var(--fonte-codigo);
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--cor-destaque-azul);
+    margin-bottom: var(--espaco-sm);
+}
+
+.etiqueta--centralizada {
+    justify-content: center;
+    width: 100%;
+}
+
+.etiqueta__ponto {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--cor-sucesso);
+    /* Pequena animação de "pulso", como um indicador de status "ao vivo" */
+    animation: pulsar 2s infinite;
+}
+
+/* --- Botões --- */
+.botao {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--fonte-destaque);
+    font-weight: 600;
+    border-radius: var(--raio-borda-pequeno);
+    transition: transform var(--transicao-padrao), box-shadow var(--transicao-padrao), background-color var(--transicao-padrao);
+    white-space: nowrap;
+}
+
+.botao--grande {
+    padding: 1rem 2rem;
+    font-size: 1.05rem;
+}
+
+.botao--pequeno {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.9rem;
+}
+
+.botao--primario {
+    background-color: var(--cor-destaque-ouro);
+    color: var(--cor-texto-sobre-claro);
+}
+
+.botao--primario:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px -8px rgba(255, 212, 61, 0.5);
+}
+
+/* Botão de call-to-action principal (compra): usa a cor coral para se
+   diferenciar visualmente de outros botões e chamar mais atenção */
+.botao--cta {
+    background-color: var(--cor-cta);
+    color: #ffffff;
+    width: 100%;
+    max-width: 420px;
+}
+
+.botao--cta:hover {
+    background-color: var(--cor-cta-hover);
+    transform: translateY(-2px) scale(1.01);
+    box-shadow: 0 15px 35px -10px rgba(255, 107, 74, 0.6);
+}
+
+/* --- Cabeçalho de seção (etiqueta + título centralizados) --- */
+.cabecalho-secao {
+    text-align: center;
+    max-width: 680px;
+    margin-inline: auto;
+    margin-bottom: var(--espaco-xl);
+}
+
+.titulo-secao {
+    font-family: var(--fonte-destaque);
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    font-weight: 700;
+    line-height: 1.25;
+    color: var(--cor-texto-principal);
+}
+
+.titulo-secao--claro {
+    color: var(--cor-texto-principal);
+}
+
+.titulo-secao--centralizado {
+    text-align: center;
+}
+
+.texto-legenda {
+    font-size: 0.85rem;
+    color: var(--cor-texto-secundario);
+}
+
+/* --- Lista de benefícios com ícone de "check" --- */
+.icone-check {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background-color: rgba(74, 222, 128, 0.15);
+    color: var(--cor-sucesso);
+    font-size: 0.8rem;
+    flex-shrink: 0;
+}
+
+.icone-check--claro {
+    background-color: rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+}
+
+
+/* ============================================================================
+   4. CABEÇALHO (HEADER)
+   ============================================================================ */
+.cabecalho {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    padding-block: var(--espaco-md);
+    transition: background-color var(--transicao-padrao), padding var(--transicao-padrao), box-shadow var(--transicao-padrao);
+}
+
+/* Classe adicionada via JavaScript quando o usuário rola a página,
+   dando um fundo sólido e sombra ao cabeçalho para melhorar a leitura */
+.cabecalho--rolado {
+    background-color: rgba(20, 27, 45, 0.92);
+    backdrop-filter: blur(10px);
+    padding-block: var(--espaco-sm);
+    box-shadow: 0 10px 30px -15px rgba(0, 0, 0, 0.5);
+}
+
+.cabecalho__conteudo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--espaco-md);
+}
+
+.cabecalho__logo {
+    display: flex;
+    align-items: center;
+    gap: var(--espaco-xs);
+    font-family: var(--fonte-destaque);
+    font-weight: 700;
+    font-size: 1.15rem;
+}
+
+.cabecalho__logo-simbolo {
+    font-family: var(--fonte-codigo);
+    color: var(--cor-destaque-azul);
+}
+
+.cabecalho__navegacao {
+    display: flex;
+    gap: var(--espaco-lg);
+}
+
+.cabecalho__link {
+    font-size: 0.95rem;
+    color: var(--cor-texto-secundario);
+    transition: color var(--transicao-padrao);
+}
+
+.cabecalho__link:hover {
+    color: var(--cor-texto-principal);
+}
+
+.cabecalho__acoes {
+    display: flex;
+    align-items: center;
+    gap: var(--espaco-md);
+}
+
+/* Botão hambúrguer: escondido em telas grandes, exibido no celular via media query */
+.cabecalho__botao-menu {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    width: 28px;
+}
+
+.cabecalho__icone-hamburguer,
+.cabecalho__icone-hamburguer::before,
+.cabecalho__icone-hamburguer::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: var(--cor-texto-principal);
+    transition: transform var(--transicao-padrao), opacity var(--transicao-padrao);
+}
+
+.cabecalho__icone-hamburguer::before {
+    transform: translateY(-8px);
+}
+
+.cabecalho__icone-hamburguer::after {
+    transform: translateY(6px);
+}
+
+/* Quando o menu mobile está aberto, o JavaScript adiciona esta classe,
+   transformando o ícone de hambúrguer em um "X" */
+.cabecalho__botao-menu.esta-aberto .cabecalho__icone-hamburguer {
+    background-color: transparent;
+}
+
+.cabecalho__botao-menu.esta-aberto .cabecalho__icone-hamburguer::before {
+    transform: translateY(0) rotate(45deg);
+}
+
+.cabecalho__botao-menu.esta-aberto .cabecalho__icone-hamburguer::after {
+    transform: translateY(0) rotate(-45deg);
+}
+
+
+/* ============================================================================
+   5. SEÇÃO HERO
+   ============================================================================ */
+.secao-hero {
+    padding-top: calc(var(--espaco-xxl) + var(--espaco-lg));
+    padding-bottom: var(--espaco-xxl);
+    background:
+        radial-gradient(circle at 15% 20%, rgba(75, 139, 190, 0.18), transparent 45%),
+        radial-gradient(circle at 85% 10%, rgba(255, 212, 61, 0.12), transparent 40%),
+        var(--cor-fundo-principal);
+}
+
+.secao-hero__grade {
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: var(--espaco-xl);
+    align-items: center;
+}
+
+.titulo-hero {
+    font-family: var(--fonte-destaque);
+    font-size: clamp(2.2rem, 4.5vw, 3.4rem);
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: var(--espaco-md);
+}
+
+.paragrafo-hero {
+    color: var(--cor-texto-secundario);
+    font-size: 1.05rem;
+    max-width: 560px;
+    margin-bottom: var(--espaco-md);
+}
+
+.lista-beneficios {
+    display: flex;
+    flex-direction: column;
+    gap: var(--espaco-xs);
+    margin-bottom: var(--espaco-lg);
+}
+
+.lista-beneficios li {
+    display: flex;
+    align-items: center;
+    gap: var(--espaco-xs);
+    font-size: 0.98rem;
+}
+
+.secao-hero__acoes {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--espaco-xs);
+    margin-bottom: var(--espaco-lg);
+}
+
+/* --- Selos numéricos de confiança (ex: "2.400+ leitores") --- */
+.selos-confianca {
+    display: flex;
+    gap: var(--espaco-lg);
+    padding-top: var(--espaco-md);
+    border-top: 1px solid var(--cor-borda);
+}
+
+.selo-confianca {
+    display: flex;
+    flex-direction: column;
+}
+
+.selo-confianca__numero {
+    font-family: var(--fonte-destaque);
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--cor-destaque-ouro);
+}
+
+.selo-confianca__legenda {
+    font-size: 0.8rem;
+    color: var(--cor-texto-secundario);
+}
+
+/* --- Palco visual: centraliza a moldura da capa na coluna --- */
+.palco-visual {
+    display: flex;
+    justify-content: center;
+    /* Damos uma largura máxima para a coluna toda não deixar a capa
+       gigante em monitores muito largos */
+    max-width: 460px;
+    margin-inline: auto;
+}
+
+/*
+   Moldura da capa: é o elemento de referência para o posicionamento dos
+   itens flutuantes (janela de código e cartão de depoimento).
+
+   A ideia central: o padding aqui reserva um "respiro" nas bordas.
+   Como os elementos flutuantes (position: absolute) são posicionados
+   em relação a essa moldura, eles ficam DENTRO do respiro — ou seja,
+   ao lado da capa — e nunca em cima do conteúdo da imagem, não importa
+   o tamanho da tela.
+*/
+.moldura-capa {
+    position: relative;
+    width: fit-content;
+    max-width: 100%;
+    margin-inline: auto;
+    padding: clamp(1.5rem, 5vw, 2.2rem) clamp(1.2rem, 5vw, 1.8rem) clamp(3.2rem, 11vw, 4.5rem) clamp(1.8rem, 6vw, 2.6rem);
+}
+
+.capa-ebook {
+    /* max-width em vez de width fixa: a imagem nunca ultrapassa seu
+       tamanho real (760px), mas encolhe livremente em telas menores */
+    width: min(320px, 100%);
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--raio-borda-padrao);
+    box-shadow: var(--sombra-padrao);
+    /* Leve rotação em 3D, dando profundidade e um toque editorial à capa */
+    transform: perspective(1000px) rotateY(-8deg) rotateX(4deg);
+    transition: transform var(--transicao-padrao);
+}
+
+.palco-visual:hover .capa-ebook {
+    transform: perspective(1000px) rotateY(-2deg) rotateX(1deg);
+}
+
+/* Janela de "editor de código" flutuante — posicionada no respiro
+   inferior-esquerdo da moldura, nunca sobre a imagem.
+   É o elemento de assinatura visual da página. */
+.janela-codigo {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: min(230px, 62%);
+    background-color: #0F1424;
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--raio-borda-pequeno);
+    box-shadow: var(--sombra-padrao);
+    overflow: hidden;
+    animation: flutuar 5s ease-in-out infinite;
+}
+
+.janela-codigo__barra {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0.5rem 0.7rem;
+    background-color: #161C30;
+    border-bottom: 1px solid var(--cor-borda);
+}
+
+.janela-codigo__bolinha {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.janela-codigo__bolinha--vermelha { background-color: #FF5F56; }
+.janela-codigo__bolinha--amarela  { background-color: #FFBD2E; }
+.janela-codigo__bolinha--verde    { background-color: #27C93F; }
+
+.janela-codigo__titulo {
+    margin-left: var(--espaco-xs);
+    font-family: var(--fonte-codigo);
+    font-size: 0.65rem;
+    color: var(--cor-texto-secundario);
+    /* Evita que o nome do arquivo quebre a linha e estoure a largura da janela */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.janela-codigo__corpo {
+    padding: 0.75rem;
+    font-family: var(--fonte-codigo);
+    font-size: 0.65rem;
+    line-height: 1.55;
+    color: #A6E3A1;
+    white-space: pre-wrap;
+    word-break: break-word;
+    min-height: 100px;
+}
+
+.janela-codigo__cursor {
+    color: var(--cor-destaque-ouro);
+    animation: piscar 1s step-end infinite;
+}
+
+/* Cartão flutuante de depoimento rápido — posicionado no respiro
+   superior-direito da moldura, nunca sobre a imagem */
+.cartao-flutuante {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    gap: var(--espaco-xs);
+    width: min(190px, 58%);
+    padding: 0.7rem 0.9rem;
+    background-color: var(--cor-superficie);
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--raio-borda-pequeno);
+    box-shadow: var(--sombra-padrao);
+    font-size: 0.75rem;
+    animation: flutuar 6s ease-in-out infinite reverse;
+}
+
+.cartao-flutuante__icone {
+    font-size: 1.1rem;
+}
+
+
+/* ============================================================================
+   6. SEÇÃO DOR / PROBLEMA
+   ============================================================================ */
+.secao-dor {
+    background-color: var(--cor-fundo-secundario);
+}
+
+.grade-cartoes {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--espaco-md);
+    margin-bottom: var(--espaco-lg);
+}
+
+.cartao-problema {
+    padding: var(--espaco-lg);
+    background-color: var(--cor-superficie);
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--raio-borda-padrao);
+    text-align: center;
+}
+
+.cartao-problema__icone {
+    display: block;
+    font-size: 2rem;
+    margin-bottom: var(--espaco-sm);
+}
+
+.cartao-problema h3 {
+    font-family: var(--fonte-destaque);
+    margin-bottom: var(--espaco-xs);
+}
+
+.cartao-problema p {
+    color: var(--cor-texto-secundario);
+    font-size: 0.92rem;
+}
+
+.texto-transicao {
+    text-align: center;
+    font-size: 1.15rem;
+    max-width: 640px;
+    margin-inline: auto;
+}
+
+
+/* ============================================================================
+   7. SEÇÃO CONTEÚDO PROGRAMÁTICO (MÓDULOS)
+   ============================================================================ */
+.lista-modulos {
+    display: flex;
+    flex-direction: column;
+    gap: var(--espaco-sm);
+    max-width: 760px;
+    margin-inline: auto;
+}
+
+.modulo {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--espaco-md);
+    padding: var(--espaco-md);
+    background-color: var(--cor-superficie);
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--raio-borda-padrao);
+    transition: border-color var(--transicao-padrao), transform var(--transicao-padrao);
+}
+
+.modulo:hover {
+    border-color: var(--cor-destaque-azul);
+    transform: translateX(4px);
+}
+
+.modulo__numero {
+    font-family: var(--fonte-codigo);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-destaque-azul);
+    min-width: 2.5rem;
+}
+
+.modulo h3 {
+    font-family: var(--fonte-destaque);
+    margin-bottom: 0.2rem;
+    font-size: 1.05rem;
+}
+
+.modulo p {
+    color: var(--cor-texto-secundario);
+    font-size: 0.9rem;
+}
+
+
+/* ============================================================================
+   8. SEÇÃO BÔNUS
+   ============================================================================ */
+.secao-bonus {
+    padding-block: 0 var(--espaco-xxl);
+}
+
+.cartao-bonus {
+    background: linear-gradient(135deg, #1E2A4A, #16203A);
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--raio-borda-padrao);
+    padding: var(--espaco-xl);
+}
+
+.lista-bonus {
+    display: flex;
+    flex-direction: column;
+    gap: var(--espaco-md);
+    margin-top: var(--espaco-lg);
+}
+
+.lista-bonus li {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--espaco-sm);
+}
+
+.lista-bonus strong {
+    display: block;
+    margin-bottom: 0.2rem;
+}
+
+.lista-bonus p {
+    color: var(--cor-texto-secundario);
+    font-size: 0.9rem;
+}
+
+
+/* ============================================================================
+   8.5. SEÇÃO AUTORIDADE DO AUTOR
+   ============================================================================ */
+.secao-autor {
+    padding-block: 0 var(--espaco-xxl);
+}
+
+.secao-autor__grade {
+    display: flex;
+    align-items: center;
+    gap: var(--espaco-xl);
+    max-width: 800px;
+    padding: var(--espaco-xl);
+    background-color: var(--cor-superficie);
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--raio-borda-padrao);
+}
+
+/* "Selo" circular com as iniciais do autor, no lugar de uma foto real */
+.selo-autor {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--cor-destaque-azul), var(--cor-destaque-ouro));
+    color: var(--cor-texto-sobre-claro);
+    font-family: var(--fonte-destaque);
+    font-size: 1.6rem;
+    font-weight: 700;
+}
+
+.secao-autor p {
+    color: var(--cor-texto-secundario);
+}
+
+
+/* ============================================================================
+   9. SEÇÃO DEPOIMENTOS
+   ============================================================================ */
+.secao-depoimentos {
+    background-color: var(--cor-fundo-secundario);
+}
+
+.grade-depoimentos {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--espaco-md);
+}
+
+.cartao-depoimento {
+    padding: var(--espaco-lg);
+    background-color: var(--cor-superficie);
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--raio-borda-padrao);
+    display: flex;
+    flex-direction: column;
+    gap: var(--espaco-sm);
+}
+
+.cartao-depoimento__estrelas {
+    color: var(--cor-destaque-ouro);
+    letter-spacing: 2px;
+}
+
+.cartao-depoimento p {
+    font-size: 0.92rem;
+    color: var(--cor-texto-secundario);
+    flex-grow: 1;
+}
+
+.cartao-depoimento__autor strong {
+    display: block;
+    font-size: 0.92rem;
+}
+
+.cartao-depoimento__autor span {
+    font-size: 0.8rem;
+    color: var(--cor-texto-secundario);
+}
+
+
+/* ============================================================================
+   10. SEÇÃO OFERTA (PREÇO + CONTADOR)
+   ============================================================================ */
+.secao-oferta {
+    background:
+        radial-gradient(circle at 50% 0%, rgba(255, 107, 74, 0.15), transparent 55%),
+        var(--cor-fundo-principal);
+}
+
+.cartao-oferta {
+    max-width: 640px;
+    margin-inline: auto;
+    text-align: center;
+    padding: var(--espaco-xl);
+    background-color: var(--cor-superficie);
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--raio-borda-padrao);
+    box-shadow: var(--sombra-padrao);
+}
+
+/* --- Contador regressivo --- */
+.contador {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--espaco-sm);
+    margin-block: var(--espaco-lg);
+}
+
+.contador__bloco {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--cor-fundo-principal);
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--raio-borda-pequeno);
+    padding: 0.7rem 1rem;
+    min-width: 68px;
+}
+
+.contador__numero {
+    font-family: var(--fonte-codigo);
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--cor-cta);
+}
+
+.contador__legenda {
+    font-size: 0.7rem;
+    color: var(--cor-texto-secundario);
+    text-transform: uppercase;
+}
+
+.contador__separador {
+    font-size: 1.6rem;
+    color: var(--cor-texto-secundario);
+    font-weight: 700;
+}
+
+.cartao-oferta__precos {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2rem;
+    margin-bottom: var(--espaco-xs);
+}
+
+.preco-antigo {
+    color: var(--cor-texto-secundario);
+    text-decoration: line-through;
+    font-size: 1rem;
+}
+
+.preco-atual {
+    font-family: var(--fonte-destaque);
+    font-size: 2.6rem;
+    font-weight: 700;
+    color: var(--cor-destaque-ouro);
+}
+
+.cartao-oferta__parcelamento {
+    color: var(--cor-texto-secundario);
+    font-size: 0.9rem;
+    margin-bottom: var(--espaco-lg);
+}
+
+.cartao-oferta__vagas {
+    margin-top: var(--espaco-sm);
+    font-size: 0.85rem;
+    color: var(--cor-cta);
+}
+
+.selos-oferta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--espaco-md);
+    margin-top: var(--espaco-lg);
+    padding-top: var(--espaco-md);
+    border-top: 1px solid var(--cor-borda);
+    font-size: 0.8rem;
+    color: var(--cor-texto-secundario);
+}
+
+
+/* ============================================================================
+   11. SEÇÃO GARANTIA
+   ============================================================================ */
+.secao-garantia__grade {
+    display: flex;
+    align-items: center;
+    gap: var(--espaco-xl);
+    max-width: 800px;
+}
+
+.selo-garantia {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    border: 2px dashed var(--cor-destaque-ouro);
+    color: var(--cor-destaque-ouro);
+    font-family: var(--fonte-destaque);
+}
+
+.selo-garantia span {
+    font-size: 2.2rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.secao-garantia p {
+    color: var(--cor-texto-secundario);
+}
+
+
+/* ============================================================================
+   12. SEÇÃO FAQ (ACORDEÃO)
+   ============================================================================ */
+.acordeao {
+    display: flex;
+    flex-direction: column;
+    gap: var(--espaco-sm);
+}
+
+.item-acordeao {
+    background-color: var(--cor-superficie);
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--raio-borda-pequeno);
+    overflow: hidden;
+}
+
+.item-acordeao__pergunta {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--espaco-md);
+    text-align: left;
+    font-family: var(--fonte-destaque);
+    font-size: 1rem;
+    color: var(--cor-texto-principal);
+}
+
+.item-acordeao__icone {
+    font-size: 1.3rem;
+    color: var(--cor-destaque-ouro);
+    transition: transform var(--transicao-padrao);
+    flex-shrink: 0;
+    margin-left: var(--espaco-sm);
+}
+
+/* Classe adicionada pelo JavaScript quando a pergunta está expandida:
+   gira o ícone de "+" para virar um "x" visualmente */
+.item-acordeao__pergunta[aria-expanded="true"] .item-acordeao__icone {
+    transform: rotate(45deg);
+}
+
+/* A resposta usa grid-template-rows para animar a altura de 0 até "auto",
+   uma técnica em CSS puro que evita cálculos de altura em JavaScript */
+.item-acordeao__resposta {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows var(--transicao-padrao);
+}
+
+.item-acordeao__pergunta[aria-expanded="true"] + .item-acordeao__resposta {
+    grid-template-rows: 1fr;
+}
+
+.item-acordeao__resposta p {
+    overflow: hidden;
+    padding: 0 var(--espaco-md);
+    color: var(--cor-texto-secundario);
+    font-size: 0.92rem;
+}
+
+.item-acordeao__pergunta[aria-expanded="true"] + .item-acordeao__resposta p {
+    padding-bottom: var(--espaco-md);
+}
+
+
+/* ============================================================================
+   13. SEÇÃO CTA FINAL
+   ============================================================================ */
+.secao-cta-final {
+    background: linear-gradient(135deg, #1E2A4A, #141B2D);
+    text-align: center;
+}
+
+.secao-cta-final__conteudo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--espaco-md);
+    max-width: 640px;
+}
+
+.secao-cta-final p {
+    color: var(--cor-texto-secundario);
+}
+
+
+/* ============================================================================
+   14. RODAPÉ
+   ============================================================================ */
+.rodape {
+    padding-block: var(--espaco-lg);
+    border-top: 1px solid var(--cor-borda);
+    text-align: center;
+}
+
+.rodape__conteudo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    color: var(--cor-texto-secundario);
+    font-size: 0.85rem;
+}
+
+
+/* ============================================================================
+   15. NOTIFICAÇÃO FLUTUANTE DE PROVA SOCIAL
+   ============================================================================ */
+.notificacao-compra {
+    position: fixed;
+    bottom: var(--espaco-md);
+    left: var(--espaco-md);
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    gap: var(--espaco-sm);
+    max-width: 300px;
+    padding: 0.9rem 1.1rem;
+    background-color: var(--cor-superficie);
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--raio-borda-pequeno);
+    box-shadow: var(--sombra-padrao);
+    font-size: 0.8rem;
+
+    /* Escondida por padrão, fora da tela. O JavaScript alterna a classe
+       "notificacao-compra--visivel" para exibi-la periodicamente. */
+    transform: translateY(150%);
+    opacity: 0;
+    transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+.notificacao-compra--visivel {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.notificacao-compra__icone {
+    font-size: 1.4rem;
+}
+
+.notificacao-compra p {
+    color: var(--cor-texto-secundario);
+}
+
+
+/* ============================================================================
+   16. ANIMAÇÕES
+   ============================================================================ */
+
+/* Efeito sutil de "flutuação" usado nos elementos decorativos do hero */
+@keyframes flutuar {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+/* Cursor piscando, simulando um editor de código real */
+@keyframes piscar {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* Pulso do indicador de status "ao vivo" na etiqueta */
+@keyframes pulsar {
+    0% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.6); }
+    70% { box-shadow: 0 0 0 8px rgba(74, 222, 128, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0); }
+}
+
+/* Estado inicial dos elementos que "surgem" ao rolar a página.
+   O JavaScript adiciona a classe "esta-visivel" quando o elemento
+   entra na área visível da tela (usando IntersectionObserver). */
+.animar-ao-rolar {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.animar-ao-rolar.esta-visivel {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+/* ============================================================================
+   17. RESPONSIVIDADE
+   ----------------------------------------------------------------------------
+   A página é construída com um layout fluido (grid, flexbox, clamp()), então
+   ela já se adapta sozinha na maior parte do caminho. As media queries abaixo
+   cuidam apenas dos pontos em que o layout precisa de uma mudança de
+   ESTRUTURA (não só de tamanho) para continuar confortável em cada faixa
+   de dispositivo:
+
+   > 1180px  -> Desktops grandes            (estilos padrão do arquivo)
+   960–1180px -> Notebooks e desktops menores
+   681–960px  -> Tablets (retrato e paisagem)
+   481–680px  -> Celulares grandes
+   ≤ 480px    -> Celulares pequenos
+   ============================================================================ */
+
+/* --- Notebooks e desktops menores --- */
+@media (max-width: 1180px) {
+    .container {
+        padding-inline: var(--espaco-lg);
+    }
+
+    .secao-hero__grade {
+        gap: var(--espaco-lg);
+    }
+}
+
+/* --- Tablets: paisagem e retrato (até 960px) --- */
+@media (max-width: 960px) {
+    .secao-hero {
+        padding-top: calc(var(--espaco-xxl) + var(--espaco-md));
+    }
+
+    .secao-hero__grade {
+        grid-template-columns: 1fr;
+        gap: var(--espaco-xl);
+    }
+
+    /* A imagem da capa sobe para cima do texto no hero, funcionando
+       melhor como "primeira impressão" em telas estreitas */
+    .secao-hero__coluna-visual {
+        order: -1;
+    }
+
+    .palco-visual {
+        margin-bottom: var(--espaco-md);
+    }
+
+    /* Em tablets ainda há espaço de sobra para 2 colunas, em vez de
+       empilhar tudo em uma coluna só como no celular */
+    .grade-cartoes,
+    .grade-depoimentos {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .secao-garantia__grade {
+        gap: var(--espaco-lg);
+    }
+}
+
+/* --- Celulares grandes (até 680px) --- */
+@media (max-width: 680px) {
+
+    :root {
+        --espaco-xxl: 3.5rem;
+        --espaco-xl: 2.5rem;
+    }
+
+    .container {
+        padding-inline: var(--espaco-md);
+    }
+
+    /* Esconde o menu de navegação horizontal e transforma em menu vertical,
+       exibido apenas quando o botão hambúrguer é acionado */
+    .cabecalho__navegacao {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        flex-direction: column;
+        gap: 0;
+        background-color: rgba(20, 27, 45, 0.98);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--cor-borda);
+
+        /* Escondido por padrão via altura zero + overflow escondido */
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height var(--transicao-padrao);
+    }
+
+    .cabecalho__navegacao.esta-aberto {
+        max-height: 320px;
+    }
+
+    .cabecalho__link {
+        padding: var(--espaco-md);
+        border-bottom: 1px solid var(--cor-borda);
+        width: 100%;
+    }
+
+    .cabecalho__botao-menu {
+        display: flex;
+    }
+
+    .cabecalho__acoes .botao--pequeno {
+        display: none;
+    }
+
+    .secao-hero__acoes {
+        align-items: stretch;
+        width: 100%;
+    }
+
+    .botao--grande {
+        width: 100%;
+    }
+
+    .selos-confianca {
+        flex-wrap: wrap;
+        gap: var(--espaco-md);
+    }
+
+    /* Volta para 1 coluna: 2 colunas ficariam apertadas demais no celular */
+    .grade-cartoes,
+    .grade-depoimentos {
+        grid-template-columns: 1fr;
+    }
+
+    /* O cartão de depoimento flutuante é escondido no celular: em telas
+       tão estreitas ele deixaria a moldura da capa desproporcional */
+    .cartao-flutuante {
+        display: none;
+    }
+
+    /* Sem o cartão do lado direito, a moldura não precisa mais do respiro
+       naquele canto — a janela de código é centralizada embaixo da capa */
+    .moldura-capa {
+        padding: var(--espaco-sm) var(--espaco-sm) clamp(3rem, 16vw, 3.6rem);
+    }
+
+    .janela-codigo {
+        left: 50%;
+        transform: translateX(-50%);
+        width: min(240px, 82vw);
+    }
+
+    .selo-garantia {
+        width: 100px;
+        height: 100px;
+    }
+
+    .secao-garantia__grade {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .secao-autor__grade {
+        flex-direction: column;
+        text-align: center;
+        padding: var(--espaco-lg);
+    }
+
+    /* Contador regressivo: blocos um pouco menores para caber
+       confortavelmente na largura da tela */
+    .contador {
+        gap: var(--espaco-xs);
+    }
+
+    .contador__bloco {
+        min-width: 56px;
+        padding: 0.6rem 0.7rem;
+    }
+
+    .contador__numero {
+        font-size: 1.3rem;
+    }
+
+    .cartao-oferta {
+        padding: var(--espaco-lg);
+    }
+
+    .preco-atual {
+        font-size: 2.1rem;
+    }
+
+    .notificacao-compra {
+        left: var(--espaco-xs);
+        right: var(--espaco-xs);
+        bottom: var(--espaco-xs);
+        max-width: none;
+    }
+}
+
+/* --- Celulares pequenos (até 400px) ---
+   Ajustes finos para aparelhos mais compactos (ex: iPhone SE e similares),
+   evitando que textos e botões fiquem espremidos. */
+@media (max-width: 400px) {
+
+    .titulo-hero {
+        font-size: 1.9rem;
+    }
+
+    .etiqueta {
+        font-size: 0.72rem;
+    }
+
+    .selos-confianca {
+        gap: var(--espaco-sm);
+    }
+
+    .selo-confianca__numero {
+        font-size: 1.15rem;
+    }
+
+    .janela-codigo {
+        width: min(210px, 78vw);
+    }
+
+    .janela-codigo__corpo {
+        font-size: 0.6rem;
+        min-height: 90px;
+    }
+
+    .contador__bloco {
+        min-width: 48px;
+        padding: 0.5rem 0.5rem;
+    }
+
+    .contador__separador {
+        font-size: 1.2rem;
+    }
+
+    .preco-atual {
+        font-size: 1.8rem;
+    }
+
+    .selo-autor {
+        width: 76px;
+        height: 76px;
+        font-size: 1.3rem;
+    }
+}
+
+/* --- Telas muito largas (acima de 1440px) ---
+   Impede que o conteúdo estique demais em monitores grandes, mantendo
+   a leitura confortável e o layout com boa proporção. */
+@media (min-width: 1440px) {
+    .container {
+        max-width: 1240px;
+    }
+}
+

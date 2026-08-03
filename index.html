@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<!--
+  ============================================================================
+  LANDING PAGE - EBOOK "PYTHON NA PRÁTICA"
+  ============================================================================
+  Este arquivo contém apenas a ESTRUTURA (HTML) da página.
+  A aparência visual está no arquivo:  css/estilos.css
+  O comportamento interativo está no arquivo: js/script.js
+
+  Por que separar os três arquivos?
+  - HTML  -> conteúdo e estrutura (o "esqueleto" da página)
+  - CSS   -> estilo e aparência (as "roupas" da página)
+  - JS    -> comportamento e interatividade (o "cérebro" da página)
+  Essa separação é uma boa prática chamada "separação de responsabilidades".
+  ============================================================================
+-->
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Python: Do Zero ao Profissional — o ebook de Deivid Frechou com lógica de programação, projetos reais e o caminho para o mercado de trabalho.">
+    <title>Python: Do Zero ao Profissional | Ebook de Deivid Frechou</title>
+
+    <!-- Ícone da aba do navegador (favicon) -->
+    <link rel="icon" type="image/jpeg" href="assets/capa-ebook.jpg">
+
+    <!-- Fontes do Google Fonts:
+         - Space Grotesk: fonte de destaque (títulos), transmite modernidade e tecnologia
+         - Inter: fonte de leitura (parágrafos), alta legibilidade em telas
+         - JetBrains Mono: fonte monoespaçada, usada em trechos de código e rótulos,
+           reforçando a identidade "programação" da página -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Nosso arquivo de estilos -->
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+
+    <!-- ========================================================
+         CABEÇALHO (HEADER)
+         Fica fixo no topo e muda de aparência ao rolar a página
+         (esse comportamento é controlado pelo JavaScript)
+    ========================================================= -->
+    <header class="cabecalho" id="cabecalho">
+        <div class="container cabecalho__conteudo">
+
+            <!-- Logo/marca da página -->
+            <a href="#topo" class="cabecalho__logo">
+                <span class="cabecalho__logo-simbolo">&lt;/&gt;</span>
+                Python<span class="destaque-texto">Profissional</span>
+            </a>
+
+            <!-- Menu de navegação para telas grandes -->
+            <nav class="cabecalho__navegacao" id="menu-navegacao">
+                <a href="#sobre-o-ebook" class="cabecalho__link">O ebook</a>
+                <a href="#conteudo-programatico" class="cabecalho__link">Conteúdo</a>
+                <a href="#depoimentos" class="cabecalho__link">Depoimentos</a>
+                <a href="#perguntas-frequentes" class="cabecalho__link">Dúvidas</a>
+            </nav>
+
+            <div class="cabecalho__acoes">
+                <a href="https://pay.hotmart.com/I106996925W?off=segwcril" target="_blank" rel="noopener noreferrer" class="botao botao--pequeno botao--primario">Quero o ebook</a>
+
+                <!-- Botão "hambúrguer" que aparece apenas no celular -->
+                <button
+                    type="button"
+                    class="cabecalho__botao-menu"
+                    id="botao-menu-mobile"
+                    aria-label="Abrir menu de navegação"
+                    aria-expanded="false"
+                    aria-controls="menu-navegacao"
+                >
+                    <span class="cabecalho__icone-hamburguer"></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main id="topo">
+
+        <!-- ========================================================
+             SEÇÃO 1: HERO (primeira dobra da página)
+             Objetivo: prender a atenção em poucos segundos e
+             deixar claro o que a pessoa ganha e o que deve fazer.
+        ========================================================= -->
+        <section class="secao secao-hero" aria-label="Apresentação principal">
+            <div class="container secao-hero__grade">
+
+                <!-- Coluna de texto e chamada para ação -->
+                <div class="secao-hero__coluna-texto animar-ao-rolar">
+                    <p class="etiqueta">
+                        <span class="etiqueta__ponto"></span>
+                        Ebook digital &bull; Acesso imediato
+                    </p>
+
+                    <h1 class="titulo-hero">
+                        <span class="destaque-texto">Python:</span>
+                        do zero ao profissional, com projetos reais
+                    </h1>
+
+                    <p class="paragrafo-hero">
+                        Chega de tutoriais soltos que não levam a lugar nenhum.
+                        O ebook <strong>Python: Do Zero ao Profissional</strong>, de Deivid Frechou,
+                        ensina lógica de programação de forma simples e guia você passo a passo
+                        até construir sistemas reais — e se preparar para o mercado de trabalho.
+                    </p>
+
+                    <!-- Lista de benefícios rápidos, com ícones em formato de "check",
+                         cada um representando um dos 4 pilares reais do ebook -->
+                    <ul class="lista-beneficios">
+                        <li><span class="icone-check">✓</span> Lógica de programação: pense, entenda, resolva</li>
+                        <li><span class="icone-check">✓</span> Do básico ao avançado, passo a passo</li>
+                        <li><span class="icone-check">✓</span> Projetos reais: sistemas, jogos e automações</li>
+                        <li><span class="icone-check">✓</span> Preparo para ganhar dinheiro com Python</li>
+                    </ul>
+
+                    <div class="secao-hero__acoes">
+                        <a href="https://pay.hotmart.com/I106996925W?off=segwcril" target="_blank" rel="noopener noreferrer" class="botao botao--grande botao--primario">
+                            Quero começar agora
+                        </a>
+                        <p class="texto-legenda">
+                            🔒 Pagamento seguro &bull; Acesso vitalício
+                        </p>
+                    </div>
+
+                    <!-- Selos de confiança (prova social rápida) -->
+                    <div class="selos-confianca">
+                        <div class="selo-confianca">
+                            <span class="selo-confianca__numero">2.400+</span>
+                            <span class="selo-confianca__legenda">leitores</span>
+                        </div>
+                        <div class="selo-confianca">
+                            <span class="selo-confianca__numero">4,9/5</span>
+                            <span class="selo-confianca__legenda">avaliação média</span>
+                        </div>
+                        <div class="selo-confianca">
+                            <span class="selo-confianca__numero">7 dias</span>
+                            <span class="selo-confianca__legenda">garantia total</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Coluna visual: capa do ebook + janela de "código digitando" -->
+                <div class="secao-hero__coluna-visual animar-ao-rolar">
+                    <div class="palco-visual">
+
+                        <!--
+                            "Moldura" que envolve a capa + os elementos flutuantes.
+                            Ela tem padding (respiro) nas bordas, e é esse respiro que
+                            garante espaço para a janela de código e o cartão de
+                            depoimento flutuarem AO LADO da capa, sem nunca cobrir
+                            o conteúdo da imagem — em nenhum tamanho de tela.
+                        -->
+                        <div class="moldura-capa">
+
+                            <!-- Capa do ebook em destaque, com leve inclinação 3D via CSS -->
+                            <img
+                                src="assets/capa-ebook.jpg"
+                                alt="Capa do ebook Python: Do Zero ao Profissional, de Deivid Frechou"
+                                class="capa-ebook"
+                                width="760"
+                                height="1140"
+                                loading="eager"
+                            >
+
+                            <!-- Janela de terminal/editor flutuante, com efeito de
+                                 digitação animado pelo JavaScript (assinatura visual da página) -->
+                            <div class="janela-codigo" aria-hidden="true">
+                                <div class="janela-codigo__barra">
+                                    <span class="janela-codigo__bolinha janela-codigo__bolinha--vermelha"></span>
+                                    <span class="janela-codigo__bolinha janela-codigo__bolinha--amarela"></span>
+                                    <span class="janela-codigo__bolinha janela-codigo__bolinha--verde"></span>
+                                    <span class="janela-codigo__titulo">projeto_final.py</span>
+                                </div>
+                                <pre class="janela-codigo__corpo"><code id="codigo-digitado"></code><span class="janela-codigo__cursor">|</span></pre>
+                            </div>
+
+                            <!-- Cartão flutuante de prova social, apenas decorativo -->
+                            <div class="cartao-flutuante" aria-hidden="true">
+                                <span class="cartao-flutuante__icone">⭐</span>
+                                <div>
+                                    <strong>Ana Ferreira</strong>
+                                    <p>"Finalmente entendi Python de verdade."</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================================
+             SEÇÃO 2: DOR / AGITAÇÃO DO PROBLEMA
+             Objetivo: fazer a pessoa se identificar com a frustração
+             de aprender sozinho, antes de apresentar a solução.
+        ========================================================= -->
+        <section class="secao secao-dor" id="sobre-o-ebook">
+            <div class="container">
+                <div class="cabecalho-secao animar-ao-rolar">
+                    <h2 class="titulo-secao">
+                        Você já tentou aprender Python e travou no meio do caminho?
+                    </h2>
+                </div>
+
+                <div class="grade-cartoes animar-ao-rolar">
+                    <article class="cartao-problema">
+                        <span class="cartao-problema__icone">😵‍💫</span>
+                        <h3>Excesso de teoria</h3>
+                        <p>Vídeos de horas explicando conceitos, mas nenhum projeto real para você praticar de verdade.</p>
+                    </article>
+                    <article class="cartao-problema">
+                        <span class="cartao-problema__icone">🧩</span>
+                        <h3>Conteúdo desconexo</h3>
+                        <p>Tutoriais separados que não se conectam, deixando lacunas na sua base de conhecimento.</p>
+                    </article>
+                    <article class="cartao-problema">
+                        <span class="cartao-problema__icone">⏳</span>
+                        <h3>Tempo perdido</h3>
+                        <p>Meses tentando sozinho, sem saber se está no caminho certo ou perdendo tempo à toa.</p>
+                    </article>
+                </div>
+
+                <p class="texto-transicao animar-ao-rolar">
+                    O <strong>Python: Do Zero ao Profissional</strong> foi criado exatamente para resolver isso:
+                    um caminho direto, sequencial e 100% prático.
+                </p>
+            </div>
+        </section>
+
+        <!-- ========================================================
+             SEÇÃO 3: CONTEÚDO PROGRAMÁTICO DO EBOOK
+             Aqui a numeração faz sentido de verdade, pois representa
+             a ordem real dos capítulos/módulos do ebook.
+        ========================================================= -->
+        <section class="secao secao-conteudo" id="conteudo-programatico">
+            <div class="container">
+                <div class="cabecalho-secao animar-ao-rolar">
+                    <p class="etiqueta etiqueta--centralizada">O que você vai aprender</p>
+                    <h2 class="titulo-secao">8 módulos para sair do zero e entregar projetos reais</h2>
+                </div>
+
+                <ol class="lista-modulos animar-ao-rolar">
+                    <li class="modulo">
+                        <span class="modulo__numero">01</span>
+                        <div>
+                            <h3>Bem-vindo ao Mundo da Programação</h3>
+                            <p>Por que Python vai mudar o jeito que você pensa: seus primeiros passos, do zero absoluto até o seu primeiro programa funcionando.</p>
+                        </div>
+                    </li>
+                    <li class="modulo">
+                        <span class="modulo__numero">02</span>
+                        <div>
+                            <h3>Lógica de Programação</h3>
+                            <p>A habilidade que separa quem copia código de quem realmente programa — algoritmos, variáveis, condicionais e laços de repetição.</p>
+                        </div>
+                    </li>
+                    <li class="modulo">
+                        <span class="modulo__numero">03</span>
+                        <div>
+                            <h3>Fundamentos do Python</h3>
+                            <p>As ferramentas que você vai usar em todo projeto que criar: strings, listas, tuplas, dicionários, funções e módulos.</p>
+                        </div>
+                    </li>
+                    <li class="modulo">
+                        <span class="modulo__numero">04</span>
+                        <div>
+                            <h3>Python na Prática</h3>
+                            <p>4 projetos reais construídos do zero: calculadora, sistema de cadastro, jogo de adivinhação e um sistema integrado com menu.</p>
+                        </div>
+                    </li>
+                    <li class="modulo">
+                        <span class="modulo__numero">05</span>
+                        <div>
+                            <h3>Nível Profissional</h3>
+                            <p>Arquivos, tratamento de erros e o poder da Orientação a Objetos — os três pilares que separam um script de um sistema de verdade.</p>
+                        </div>
+                    </li>
+                    <li class="modulo">
+                        <span class="modulo__numero">06</span>
+                        <div>
+                            <h3>Python para o Mercado</h3>
+                            <p>Automação, consumo de APIs e como transformar código em renda — freelas, produtos digitais e o caminho até o primeiro emprego.</p>
+                        </div>
+                    </li>
+                    <li class="modulo">
+                        <span class="modulo__numero">07</span>
+                        <div>
+                            <h3>Projetos Reais</h3>
+                            <p>O capítulo do portfólio: sistema de login com hash de senha, sistema de vendas completo e um guia de como publicar tudo no GitHub.</p>
+                        </div>
+                    </li>
+                    <li class="modulo">
+                        <span class="modulo__numero">08</span>
+                        <div>
+                            <h3>Desafios</h3>
+                            <p>Prove para você mesmo que chegou lá: exercícios graduados do básico ao avançado e um desafio final que une tudo o que foi ensinado.</p>
+                        </div>
+                    </li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- ========================================================
+             SEÇÃO 4: BÔNUS
+             Gatilho de valor agregado (aumenta a percepção de valor)
+        ========================================================= -->
+        <section class="secao secao-bonus">
+            <div class="container">
+                <div class="cartao-bonus animar-ao-rolar">
+                    <div class="cartao-bonus__texto">
+                        <p class="etiqueta">Bônus exclusivos</p>
+                        <h2 class="titulo-secao titulo-secao--claro">
+                            Ao garantir seu acesso hoje, você também recebe:
+                        </h2>
+                        <ul class="lista-bonus">
+                            <li>
+                                <span class="icone-check icone-check--claro">✓</span>
+                                <div>
+                                    <strong>Checklist de boas práticas em Python</strong>
+                                    <p>Guia rápido para escrever código limpo desde o primeiro dia.</p>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="icone-check icone-check--claro">✓</span>
+                                <div>
+                                    <strong>Banco de exercícios extras</strong>
+                                    <p>Mais de 30 desafios para fixar cada módulo do ebook.</p>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="icone-check icone-check--claro">✓</span>
+                                <div>
+                                    <strong>Acesso a atualizações futuras</strong>
+                                    <p>Toda nova versão do ebook chega até você sem custo adicional.</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================================
+             SEÇÃO 4.5: AUTORIDADE DO AUTOR
+             Gatilho de autoridade: mostrar quem escreveu o material
+             aumenta a confiança de quem está decidindo comprar.
+        ========================================================= -->
+        <section class="secao secao-autor">
+            <div class="container secao-autor__grade animar-ao-rolar">
+                <div class="selo-autor" aria-hidden="true">DF</div>
+                <div>
+                    <h2 class="titulo-secao">Deivid Frechou</h2>
+                    <p>
+                        Autor do ebook <strong>Python: Do Zero ao Profissional</strong>,
+                        Deivid construiu este material com uma missão clara: tirar a
+                        linguagem Python do campo abstrato e mostrar, na prática, como
+                        qualquer pessoa pode sair do zero até construir sistemas reais
+                        e se posicionar no mercado de trabalho.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================================
+             SEÇÃO 5: PROVA SOCIAL / DEPOIMENTOS
+        ========================================================= -->
+        <section class="secao secao-depoimentos" id="depoimentos">
+            <div class="container">
+                <div class="cabecalho-secao animar-ao-rolar">
+                    <h2 class="titulo-secao">Resultado de quem seguiu o método</h2>
+                </div>
+
+                <div class="grade-depoimentos animar-ao-rolar">
+                    <article class="cartao-depoimento">
+                        <div class="cartao-depoimento__estrelas" aria-label="Avaliação 5 de 5 estrelas">★★★★★</div>
+                        <p>"Eu já tinha desistido de aprender a programar duas vezes.
+                        Com esse ebook, em três semanas já tinha automatizado
+                        uma planilha inteira do meu trabalho."</p>
+                        <div class="cartao-depoimento__autor">
+                            <strong>Carla Menezes</strong>
+                            <span>Analista administrativa</span>
+                        </div>
+                    </article>
+                    <article class="cartao-depoimento">
+                        <div class="cartao-depoimento__estrelas" aria-label="Avaliação 5 de 5 estrelas">★★★★★</div>
+                        <p>"O passo a passo dos projetos é o diferencial.
+                        Não é só teoria, é mão na massa desde o capítulo 1."</p>
+                        <div class="cartao-depoimento__autor">
+                            <strong>Rafael Souza</strong>
+                            <span>Estudante de engenharia</span>
+                        </div>
+                    </article>
+                    <article class="cartao-depoimento">
+                        <div class="cartao-depoimento__estrelas" aria-label="Avaliação 5 de 5 estrelas">★★★★★</div>
+                        <p>"Testei três cursos gratuitos antes. Nenhum me deu
+                        a clareza que esse material deu logo no início."</p>
+                        <div class="cartao-depoimento__autor">
+                            <strong>Juliana Prado</strong>
+                            <span>Recém-formada em ADS</span>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================================
+             SEÇÃO 6: OFERTA, PREÇO E URGÊNCIA
+             Contém o contador regressivo controlado pelo JavaScript.
+        ========================================================= -->
+        <section class="secao secao-oferta" id="oferta">
+            <div class="container">
+                <div class="cartao-oferta animar-ao-rolar">
+
+                    <p class="etiqueta etiqueta--centralizada">Oferta por tempo limitado</p>
+                    <h2 class="titulo-secao titulo-secao--claro titulo-secao--centralizado">
+                        Garanta seu exemplar de "Python: Do Zero ao Profissional"
+                    </h2>
+
+                    <!-- Contador regressivo: os números são preenchidos pelo JavaScript -->
+                    <div class="contador" id="contador-regressivo" aria-live="polite">
+                        <div class="contador__bloco">
+                            <span class="contador__numero" id="contador-horas">00</span>
+                            <span class="contador__legenda">horas</span>
+                        </div>
+                        <span class="contador__separador">:</span>
+                        <div class="contador__bloco">
+                            <span class="contador__numero" id="contador-minutos">00</span>
+                            <span class="contador__legenda">min</span>
+                        </div>
+                        <span class="contador__separador">:</span>
+                        <div class="contador__bloco">
+                            <span class="contador__numero" id="contador-segundos">00</span>
+                            <span class="contador__legenda">seg</span>
+                        </div>
+                    </div>
+
+                    <div class="cartao-oferta__precos">
+                        <span class="preco-antigo">De R$ 97,00</span>
+                        <span class="preco-atual">por R$ 47,00</span>
+                    </div>
+
+                    <p class="cartao-oferta__parcelamento">
+                        ou 6x de R$ 8,50 no cartão &bull; acesso imediato após a confirmação
+                    </p>
+
+                    <!--
+                        Botão de compra:
+                        troque o href abaixo pelo link real do seu checkout
+                        (Hotmart, Kiwify, Stripe, PagSeguro, etc.)
+                    -->
+                    <a href="https://pay.hotmart.com/I106996925W?off=segwcril" target="_blank" rel="noopener noreferrer" class="botao botao--grande botao--cta" id="botao-comprar">
+                        Quero garantir meu acesso agora
+                    </a>
+
+                    <p class="cartao-oferta__vagas" id="texto-vagas">
+                        🔥 Restam poucas vagas com este valor promocional
+                    </p>
+
+                    <!-- Selos de garantia e segurança -->
+                    <div class="selos-oferta">
+                        <span>🔒 Compra 100% segura</span>
+                        <span>📩 Entrega imediata</span>
+                        <span>♻️ 7 dias de garantia</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================================
+             SEÇÃO 7: GARANTIA
+        ========================================================= -->
+        <section class="secao secao-garantia">
+            <div class="container secao-garantia__grade animar-ao-rolar">
+                <div class="selo-garantia" aria-hidden="true">
+                    <span>7</span>
+                    <small>dias</small>
+                </div>
+                <div>
+                    <h2 class="titulo-secao">Risco zero para você</h2>
+                    <p>
+                        Se em até 7 dias você sentir que o ebook não é para você,
+                        basta enviar um e-mail e devolvemos 100% do seu investimento.
+                        Sem perguntas, sem burocracia.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================================
+             SEÇÃO 8: PERGUNTAS FREQUENTES (FAQ)
+             O acordeão (abrir/fechar) é controlado pelo JavaScript.
+        ========================================================= -->
+        <section class="secao secao-faq" id="perguntas-frequentes">
+            <div class="container container--estreito">
+                <div class="cabecalho-secao animar-ao-rolar">
+                    <p class="etiqueta etiqueta--centralizada">Dúvidas frequentes</p>
+                    <h2 class="titulo-secao">Perguntas que podem estar na sua cabeça</h2>
+                </div>
+
+                <div class="acordeao animar-ao-rolar">
+
+                    <div class="item-acordeao">
+                        <button class="item-acordeao__pergunta" type="button" aria-expanded="false">
+                            Preciso ter algum conhecimento prévio em programação?
+                            <span class="item-acordeao__icone">+</span>
+                        </button>
+                        <div class="item-acordeao__resposta">
+                            <p>Não. O ebook foi escrito para quem nunca programou antes,
+                            começando pelos conceitos mais básicos e avançando no seu ritmo.</p>
+                        </div>
+                    </div>
+
+                    <div class="item-acordeao">
+                        <button class="item-acordeao__pergunta" type="button" aria-expanded="false">
+                            Como recebo o material após a compra?
+                            <span class="item-acordeao__icone">+</span>
+                        </button>
+                        <div class="item-acordeao__resposta">
+                            <p>O acesso é liberado automaticamente na plataforma assim que
+                            o pagamento é confirmado, em formato PDF de leitura em qualquer dispositivo.</p>
+                        </div>
+                    </div>
+
+                    <div class="item-acordeao">
+                        <button class="item-acordeao__pergunta" type="button" aria-expanded="false">
+                            Quanto tempo tenho para acessar o conteúdo?
+                            <span class="item-acordeao__icone">+</span>
+                        </button>
+                        <div class="item-acordeao__resposta">
+                            <p>O acesso é vitalício: você estuda no seu tempo e ainda
+                            recebe gratuitamente as próximas atualizações do material.</p>
+                        </div>
+                    </div>
+
+                    <div class="item-acordeao">
+                        <button class="item-acordeao__pergunta" type="button" aria-expanded="false">
+                            E se eu não gostar do conteúdo?
+                            <span class="item-acordeao__icone">+</span>
+                        </button>
+                        <div class="item-acordeao__resposta">
+                            <p>Você tem 7 dias de garantia incondicional. Se não for para você,
+                            devolvemos 100% do valor pago.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================================
+             SEÇÃO 9: CHAMADA FINAL (ÚLTIMO EMPURRÃO)
+        ========================================================= -->
+        <section class="secao secao-cta-final">
+            <div class="container secao-cta-final__conteudo animar-ao-rolar">
+                <h2 class="titulo-secao titulo-secao--claro">
+                    Seu primeiro projeto em Python pode começar hoje
+                </h2>
+                <p>
+                    Cada dia adiando é um dia a mais tentando aprender sozinho.
+                    Dê o primeiro passo agora, com um método guiado do início ao fim.
+                </p>
+                <a href="https://pay.hotmart.com/I106996925W?off=segwcril" target="_blank" rel="noopener noreferrer" class="botao botao--grande botao--cta">
+                    Quero garantir meu ebook agora
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- ========================================================
+         RODAPÉ (FOOTER)
+    ========================================================= -->
+    <footer class="rodape">
+        <div class="container rodape__conteudo">
+            <p>&copy; <span id="ano-atual"></span> Python: Do Zero ao Profissional. Todos os direitos reservados.</p>
+            <p class="rodape__aviso">
+                Este é um material educacional independente e não possui vínculo
+                oficial com a Python Software Foundation.
+            </p>
+        </div>
+    </footer>
+
+    <!--
+        NOTIFICAÇÃO DE PROVA SOCIAL EM TEMPO REAL (gatilho de prova social)
+        Este elemento fica escondido e o JavaScript o exibe periodicamente
+        no canto da tela, simulando compras recentes.
+    -->
+    <div class="notificacao-compra" id="notificacao-compra" role="status" aria-live="polite">
+        <span class="notificacao-compra__icone">🛒</span>
+        <div>
+            <strong id="notificacao-nome">Alguém</strong>
+            <p id="notificacao-texto">acabou de garantir o ebook</p>
+        </div>
+    </div>
+
+    <!-- Nosso arquivo de comportamento (carregado no fim para não travar a renderização da página) -->
+    <script src="js/script.js"></script>
+</body>
+</html>
